@@ -1,7 +1,15 @@
-import '../styles/globals.css'
+import Head from 'next/head';
+import React from 'react';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const MomoSNS = ({ Component }) => {
+  return (
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <title>MomoSNS</title>
+      </Head>
+    </>
+  );
+};
 
-export default MyApp
+export default MomoGram;
