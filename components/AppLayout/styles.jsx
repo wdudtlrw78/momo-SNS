@@ -7,7 +7,23 @@ export const HeadContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 480px) {
+  & #search {
+    height: 28px;
+    padding: 0 4px;
+    border: 1px solid #d9d9d9;
+    color: #292929;
+  }
+
+  & #search:focus {
+    outline: none;
+    border: 1px solid #008cff;
+  }
+
+  & #search::placeholder {
+    color: #c7c7c7;
+  }
+
+  @media (max-width: 820px) {
     & #search {
       display: none;
     }

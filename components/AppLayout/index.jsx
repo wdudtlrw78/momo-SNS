@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { Affix, Button, Input, Space } from 'antd';
+import { Affix, Button } from 'antd';
 import { PlusOutlined, UserOutlined } from '@ant-design/icons';
+import useInput from '../../hooks/useInput';
 import 'antd/dist/antd.css';
 import { HeadContainer, MainContainer } from './styles';
 
-const { Search } = Input;
-
 function AppLayouts({ children }) {
+  const [search, onChangeSearch] = useInput('');
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
-  const onSearch = (value) => console.log(value);
+  const onSearch = useCallback((e) => {
+    e.preventDefault();
+    console.log(search);
+  }, []);
 
   return (
     <>
@@ -46,9 +49,16 @@ function AppLayouts({ children }) {
                 </a>
               </Link>
             </div>
-            <Space direction="vertical">
-              <Search id="search" placeholder="tag search..." style={{ width: '215px' }} onSearch={onSearch} />
-            </Space>
+            <form onSubmit={onSearch}>
+              <input
+                id="search"
+                placeholder="tag search..."
+                style={{ width: '215px' }}
+                value={search}
+                onChange={onChangeSearch}
+              />
+            </form>
+
             {isLoggedIn ? (
               <div className="menu-group" style={{ display: 'flex' }}>
                 <div
