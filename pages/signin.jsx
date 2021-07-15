@@ -7,7 +7,7 @@ import Router from 'next/router';
 import AppLayout from '../components/AppLayout';
 import { loginAction } from '../reducers';
 
-const SignGroup = styled.div`
+export const SignGroup = styled.div`
   @media (max-width: 575px) {
     max-width: 90%;
   }
@@ -45,9 +45,18 @@ function SignIn() {
           style={{ width: '364px' }}
         >
           <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            name="email"
+            label="E-mail"
+            rules={[
+              {
+                type: 'email',
+                message: 'The input is not valid E-mail!',
+              },
+              {
+                required: true,
+                message: 'Please input your E-mail!',
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -66,7 +75,7 @@ function SignIn() {
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit" loading={false}>
-              Next
+              Log in
             </Button>
           </Form.Item>
           <SignGroup style={{ width: '120%', textAlign: 'center' }}>
