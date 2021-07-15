@@ -18,7 +18,7 @@ function SignIn() {
 
   const onSubmitForm = useCallback((values) => {
     dispatch(loginAction(values));
-
+    console.log(values);
     if (values) {
       Router.replace('/');
     }

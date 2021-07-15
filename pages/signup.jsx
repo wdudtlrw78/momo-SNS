@@ -108,7 +108,7 @@ function SignUp() {
             <Input.Password />
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={false}>
               Sign up
             </Button>
           </Form.Item>

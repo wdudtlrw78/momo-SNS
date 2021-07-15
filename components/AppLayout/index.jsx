@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { Affix, Button } from 'antd';
-import { PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import useInput from '../../hooks/useInput';
 import 'antd/dist/antd.css';
-import { HeadContainer, MainContainer } from './styles';
+import ProfileImg from '../ProfileImg';
+import { HeadContainer, MainContainer, PostUpButton } from './styles';
 
 function AppLayouts({ children }) {
   const [search, onChangeSearch] = useInput('');
@@ -60,27 +61,14 @@ function AppLayouts({ children }) {
             </form>
 
             {isLoggedIn ? (
-              <div className="menu-group" style={{ display: 'flex' }}>
-                <div
-                  className="postup"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '36px',
-                    height: '36px',
-                    border: '1px solid #292929',
-                    borderRadius: '50%',
-                    cursor: 'pointer',
-                    marginRight: '16px',
-                  }}
-                >
+              <div style={{ display: 'flex' }}>
+                <PostUpButton>
                   <Link href="/postup">
                     <a>
                       <PlusOutlined style={{ paddingBottom: '2px', fontSize: '14px', color: '#292929' }} />
                     </a>
                   </Link>
-                </div>
+                </PostUpButton>
                 <div
                   className="user-info"
                   style={{
@@ -94,7 +82,7 @@ function AppLayouts({ children }) {
                     cursor: 'pointer',
                   }}
                 >
-                  <UserOutlined style={{ fontSize: '14px', color: '#292929' }} />
+                  <ProfileImg />
                 </div>
               </div>
             ) : (

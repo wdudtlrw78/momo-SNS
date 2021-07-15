@@ -27,10 +27,12 @@ const globalStyles = (
         text-decoration: none;
       }
 
-      button {
-        outline: none;
+      button,
+      button:focus {
+        border: none;
         cursor: pointer;
-        color: transparent;
+        outline: none;
+        background: transparent;
       }
     `}
   />
