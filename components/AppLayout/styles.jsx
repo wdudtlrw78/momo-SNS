@@ -30,7 +30,7 @@ export const HeadContainer = styled.div`
   }
 `;
 
-export const PostUpButton = styled.button`
+export const AddPostButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,6 +41,15 @@ export const PostUpButton = styled.button`
   margin-right: 16px;
   @media (min-width: 820px) {
     display: none;
+  }
+
+  &:hover {
+    background: #008cff;
+    transition: background 0.3s ease-in;
+
+    & .plus {
+      color: #fff;
+    }
   }
 `;
 

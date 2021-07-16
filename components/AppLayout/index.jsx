@@ -6,12 +6,12 @@ import { Affix, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import useInput from '../../hooks/useInput';
 import 'antd/dist/antd.css';
+import { AddPostButton, HeadContainer, MainContainer } from './styles';
 import ProfileImg from '../ProfileImg';
-import { HeadContainer, MainContainer, PostUpButton } from './styles';
 
 function AppLayouts({ children }) {
   const [search, onChangeSearch] = useInput('');
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   const onSearch = useCallback((e) => {
     e.preventDefault();
@@ -62,13 +62,17 @@ function AppLayouts({ children }) {
 
             {isLoggedIn ? (
               <div style={{ display: 'flex' }}>
-                <PostUpButton>
+                <AddPostButton>
                   <Link href="/postup">
                     <a>
-                      <PlusOutlined style={{ paddingBottom: '2px', fontSize: '14px', color: '#292929' }} />
+                      <PlusOutlined
+                        className="plus"
+                        style={{ paddingBottom: '2px', fontSize: '18px', color: '#292929' }}
+                      />
                     </a>
                   </Link>
-                </PostUpButton>
+                </AddPostButton>
+
                 <div
                   className="user-info"
                   style={{

@@ -1,7 +1,8 @@
 import React from 'react';
+import AppLayouts from '../components/AppLayout';
 
 function Profile() {
-  return <div>Profile</div>;
+  return <AppLayouts>Profile</AppLayouts>;
 }
 
 export default Profile;

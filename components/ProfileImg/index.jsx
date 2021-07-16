@@ -11,8 +11,7 @@ export const Profile = styled.img`
 `;
 
 function ProfileImg() {
-  const user = useSelector((state) => state.user.user);
-
+  const { user } = useSelector((state) => state.user);
   return (
     <Link href="/profile">
       <a>
