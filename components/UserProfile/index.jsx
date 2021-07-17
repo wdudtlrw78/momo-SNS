@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { LogoutOutlined } from '@ant-design/icons';
+import { EditOutlined, LogoutOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import ProfileImg from '../ProfileImg';
+import NicknameEditForm from '../NicknameEditForm';
 
 export const Container = styled.div`
   display: flex;
@@ -30,16 +32,21 @@ export const InfoGroup = styled.div`
   }
 `;
 
-export const TitleAndLogout = styled.div`
+export const NicknameAndLogout = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding-left: 1rem;
-  & h2 {
-    font-size: 18px;
-    margin-bottom: 0;
-    color: #292929;
+`;
+
+export const Nickname = styled.div`
+  font-size: 18px;
+  margin-bottom: 0;
+  color: #292929;
+
+  & button {
+    color: #008cff;
   }
 `;
 
@@ -62,18 +69,45 @@ export const PostAndFollow = styled.div`
 
 function UserProfile() {
   const { isLoggedIn, user } = useSelector((state) => state.user);
+  const [nickname, setNickname] = useState(true);
+  const [showNicknameEditForm, setShowNicknameEditForm] = useState(false);
+
+  const onClickShowNicknameEditForm = useCallback(() => {
+    setNickname(false);
+    setShowNicknameEditForm(true);
+  }, []);
+
+  const router = useRouter();
+  const isProfilePage = router.pathname === '/profile';
 
   return (
     <Container>
       <AvatarGroup>{isLoggedIn && <ProfileImg large />}</AvatarGroup>
       <InfoGroup>
-        <TitleAndLogout>
-          <h2>{isLoggedIn && user.email}</h2>
+        <NicknameAndLogout>
+          {nickname && (
+            <Nickname value={nickname}>
+              {isLoggedIn && user.email}{' '}
+              {isProfilePage && (
+                <button type="button" onClick={onClickShowNicknameEditForm}>
+                  <EditOutlined />
+                </button>
+              )}
+            </Nickname>
+          )}
+
+          {showNicknameEditForm && (
+            <NicknameEditForm
+              value={showNicknameEditForm}
+              setNickname={setNickname}
+              setShowNicknameEditForm={setShowNicknameEditForm}
+            />
+          )}
+
           <button type="button">
             <LogoutOutlined style={{ padding: '1rem', fontSize: '18px', color: '#65676B' }} />
           </button>
-        </TitleAndLogout>
-
+        </NicknameAndLogout>
         <PostAndFollow>
           <button key="post" type="button">
             게시물
