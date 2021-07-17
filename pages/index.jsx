@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
 import AppLayouts from '../components/AppLayout';
 import UserProfile from '../components/UserProfile';
 import PostCard from '../components/PostCard';
-import Link from 'next/link';
 import ProfileImg from '../components/ProfileImg';
-import { useSelector } from 'react-redux';
 
 export const MainContainer = styled.div`
   width: 100%;
   max-width: 935px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 
   @media (max-width: 820px) {
     flex-direction: column-reverse;
@@ -23,7 +23,7 @@ export const MainContainer = styled.div`
 export const ContentContainer = styled.div`
   flex: 6;
   width: 100%;
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
 `;
 
 export const AddPostForm = styled.div`
@@ -35,6 +35,10 @@ export const AddPostForm = styled.div`
   background: #fff;
   border: 1px solid #e6e6e6;
   border-radius: 8px;
+
+  @media (max-width: 820px) {
+    margin: 1rem 0;
+  }
 `;
 
 export const Container = styled.div`
@@ -62,6 +66,7 @@ export const AddPost = styled.button`
 `;
 
 export const SiderContainer = styled.div`
+  width: 100%;
   flex: 4;
   padding-left: 1rem;
 
