@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { EditOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import ProfileImg from '../ProfileImg';
 import NicknameEditForm from '../NicknameEditForm';
+import { logoutAction } from '../../reducers';
 
 export const Container = styled.div`
   display: flex;
@@ -69,6 +70,7 @@ export const PostAndFollow = styled.div`
 `;
 
 function UserProfile() {
+  const dispatch = useDispatch();
   const { isLoggedIn, user } = useSelector((state) => state.user);
   const [nickname, setNickname] = useState(true);
   const [showNicknameEditForm, setShowNicknameEditForm] = useState(false);
@@ -80,6 +82,10 @@ function UserProfile() {
 
   const router = useRouter();
   const isProfilePage = router.pathname === '/profile';
+
+  const onLogout = useCallback(() => {
+    dispatch(logoutAction());
+  }, []);
 
   return (
     <Container>
@@ -105,7 +111,7 @@ function UserProfile() {
             />
           )}
 
-          <button type="button">
+          <button type="button" onClick={onLogout}>
             <LogoutOutlined style={{ padding: '1rem', fontSize: '18px', color: '#65676B' }} />
           </button>
         </NicknameAndLogout>
