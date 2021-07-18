@@ -78,6 +78,7 @@ export const SiderContainer = styled.div`
 
 function Home() {
   const { isLoggedIn, user } = useSelector((state) => state.user);
+  const { mainPosts } = useSelector((state) => state.post);
   return (
     <AppLayouts>
       <MainContainer>
@@ -101,7 +102,9 @@ function Home() {
             </Container>
           </AddPostForm>
 
-          <PostCard />
+          {mainPosts.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
         </ContentContainer>
         <SiderContainer>
           <UserProfile />

@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { useDispatch } from 'react-redux';
 import Router from 'next/router';
 import AppLayout from '../components/AppLayout';
-import { loginAction } from '../reducers';
+import { loginAction } from '../reducers/user';
 
 export const SignGroup = styled.div`
   @media (max-width: 575px) {
@@ -66,7 +66,7 @@ function SignIn() {
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password />
+            <Input.Password autoComplete="on" />
           </Form.Item>
 
           <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import ProfileImg from '../ProfileImg';
 import NicknameEditForm from '../NicknameEditForm';
-import { logoutAction } from '../../reducers';
+import { logoutAction } from '../../reducers/user';
 
 export const Container = styled.div`
   display: flex;
@@ -89,7 +89,11 @@ function UserProfile() {
 
   return (
     <Container>
-      <AvatarGroup>{isLoggedIn && <ProfileImg large />}</AvatarGroup>
+      <AvatarGroup>
+        <Link href="/profile">
+          <a>{isLoggedIn && <ProfileImg large />}</a>
+        </Link>
+      </AvatarGroup>
       <InfoGroup>
         <NicknameAndLogout>
           {nickname && (

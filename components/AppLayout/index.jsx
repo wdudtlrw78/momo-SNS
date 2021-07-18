@@ -86,7 +86,11 @@ function AppLayouts({ children }) {
                     cursor: 'pointer',
                   }}
                 >
-                  <ProfileImg />
+                  <Link href="/profile">
+                    <a>
+                      <ProfileImg />
+                    </a>
+                  </Link>
                 </div>
               </div>
             ) : (
