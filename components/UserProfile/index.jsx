@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { EditOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
@@ -114,11 +115,15 @@ function UserProfile() {
             <br />0
           </button>
           <button key="follower" type="button">
-            팔로워
+            <Link href="/profile">
+              <a>팔로워</a>
+            </Link>
             <br />0
           </button>
           <button key="follow" type="button">
-            팔로우
+            <Link href="/profile">
+              <a>팔로우</a>
+            </Link>
             <br />0
           </button>
         </PostAndFollow>

@@ -62,6 +62,7 @@ export const AddPost = styled.button`
     align-items: center;
     height: 36px;
     color: #65676b;
+    margin-left: 0.5rem;
   }
 `;
 
@@ -76,7 +77,7 @@ export const SiderContainer = styled.div`
 `;
 
 function Home() {
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn, user } = useSelector((state) => state.user);
   return (
     <AppLayouts>
       <MainContainer>
@@ -93,7 +94,7 @@ function Home() {
               <AddPost>
                 <Link href="/postup">
                   <a>
-                    <p>님, 무슨 생각을 하고 계신가요?</p>
+                    <p>{`${user?.email || ''} 님, 무슨 생각을 하고 계신가요?`}</p>
                   </a>
                 </Link>
               </AddPost>
