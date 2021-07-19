@@ -21,9 +21,9 @@ export const Profile = styled.img`
 `;
 
 function ProfileImg({ large }) {
-  const { user } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
 
-  return <Profile src={gravatar.url(user.email, { s: '36px', d: 'retro' })} alt={user.email} large={large} />;
+  return <Profile src={gravatar.url(me.email, { s: '36px', d: 'retro' })} alt={me.email} large={large} />;
 }
 
 ProfileImg.propTypes = {

@@ -77,7 +77,7 @@ export const SiderContainer = styled.div`
 `;
 
 function Home() {
-  const { isLoggedIn, user } = useSelector((state) => state.user);
+  const { isLoggedIn, me } = useSelector((state) => state.user);
   const { mainPosts } = useSelector((state) => state.post);
   return (
     <AppLayouts>
@@ -95,16 +95,14 @@ function Home() {
               <AddPost>
                 <Link href="/postup">
                   <a>
-                    <p>{`${user?.email || ''} 님, 무슨 생각을 하고 계신가요?`}</p>
+                    <p>{`${me?.email || ''} 님, 무슨 생각을 하고 계신가요?`}</p>
                   </a>
                 </Link>
               </AddPost>
             </Container>
           </AddPostForm>
 
-          {mainPosts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
+          {isLoggedIn && mainPosts.map((post) => <PostCard key={post.id} post={post} />)}
         </ContentContainer>
         <SiderContainer>
           <UserProfile />

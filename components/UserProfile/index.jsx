@@ -9,6 +9,7 @@ import NicknameEditForm from '../NicknameEditForm';
 import { logoutAction } from '../../reducers/user';
 
 export const Container = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,7 +72,7 @@ export const PostAndFollow = styled.div`
 
 function UserProfile() {
   const dispatch = useDispatch();
-  const { isLoggedIn, user } = useSelector((state) => state.user);
+  const { isLoggedIn, me } = useSelector((state) => state.user);
   const [nickname, setNickname] = useState(true);
   const [showNicknameEditForm, setShowNicknameEditForm] = useState(false);
 
@@ -98,7 +99,7 @@ function UserProfile() {
         <NicknameAndLogout>
           {nickname && (
             <Nickname value={nickname}>
-              {isLoggedIn && user.email}{' '}
+              {isLoggedIn && me.email}{' '}
               {isProfilePage && (
                 <button type="button" onClick={onClickShowNicknameEditForm}>
                   <EditOutlined />
@@ -116,7 +117,7 @@ function UserProfile() {
           )}
 
           <button type="button" onClick={onLogout}>
-            <LogoutOutlined style={{ padding: '1rem', fontSize: '18px', color: '#65676B' }} />
+            <LogoutOutlined style={{ padding: '1rem', fontSize: '18px', color: '#65676B' }} title="로그아웃" />
           </button>
         </NicknameAndLogout>
         <PostAndFollow>
