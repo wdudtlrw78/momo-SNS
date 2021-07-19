@@ -16,7 +16,7 @@ function CommentForm({ post }) {
     <Form onFinish={onSubmitComment}>
       <Form.Item style={{ position: 'relative', margin: 0 }}>
         <Input.TextArea placeholder="댓글달기..." value={commentText} onChange={onChangeCommentText} rows={4} />
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" style={{ float: 'right' }}>
           Post
         </Button>
       </Form.Item>

@@ -35,6 +35,10 @@ const globalStyles = (
         background: transparent;
       }
 
+      .ant-card-body {
+        padding: 1rem;
+      }
+
       .slick-slide {
         display: inline-block;
       }

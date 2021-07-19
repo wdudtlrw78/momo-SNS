@@ -84,13 +84,7 @@ function Home() {
       <MainContainer>
         <ContentContainer>
           <AddPostForm>
-            {isLoggedIn && (
-              <Link href="/profile">
-                <a>
-                  <ProfileImg />
-                </a>
-              </Link>
-            )}
+            {isLoggedIn && <ProfileImg />}
             <Container>
               <AddPost>
                 <Link href="/postup">

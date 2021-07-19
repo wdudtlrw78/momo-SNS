@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import ProfileImg from '../ProfileImg';
 import PostImages from '../PostImages';
 import CommentForm from '../CommentForm';
+import PostCardContent from '../PostCardContent';
 
 export const PostContainer = styled.div`
   margin-bottom: 1rem;
@@ -88,16 +89,23 @@ function PostCard({ post }) {
       <Card
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
-          <RetweetOutlined style={{ fontSize: '18px' }} key="retweet" />,
+          <RetweetOutlined style={{ fontSize: '18px' }} key="retweet" title="리트윗" />,
           liked ? (
-            <HeartTwoTone style={{ fontSize: '18px' }} twoToneColor="#eb2f96" key="heart" onClick={onToggleLike} />
+            <HeartTwoTone
+              style={{ fontSize: '18px' }}
+              twoToneColor="#eb2f96"
+              key="heart"
+              onClick={onToggleLike}
+              title="좋아요"
+            />
           ) : (
-            <HeartOutlined style={{ fontSize: '18px' }} key="heart" onClick={onToggleLike} />
+            <HeartOutlined style={{ fontSize: '18px' }} key="heart" onClick={onToggleLike} title="좋아요" />
           ),
-          <MessageOutlined style={{ fontSize: '18px' }} key="comment" onClick={onToggleComment} />,
+          <MessageOutlined style={{ fontSize: '18px' }} key="comment" onClick={onToggleComment} title="댓글" />,
         ]}
       >
-        <div>{`${post.Comments.length}개의 댓글`}</div>
+        <Card.Meta description={<PostCardContent postData={post.content} />} />
+        <div style={{ padding: '0', color: '#00000073', marginTop: '1rem' }}>{`${post.Comments.length}개의 댓글`}</div>
       </Card>
       {CommentFormOpend && (
         <div>
