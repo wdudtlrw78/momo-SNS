@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 import Link from 'next/link';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styled from '@emotion/styled';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import AppLayout from '../components/AppLayout';
-import { loginAction } from '../reducers/user';
+import { loginRequestAction } from '../reducers/user';
 
 export const SignGroup = styled.div`
   @media (max-width: 575px) {
@@ -15,9 +15,9 @@ export const SignGroup = styled.div`
 
 function SignIn() {
   const dispatch = useDispatch();
-
+  const { isLoggingIn } = useSelector((state) => state.user);
   const onSubmitForm = useCallback((values) => {
-    dispatch(loginAction(values));
+    dispatch(loginRequestAction(values));
     console.log(values);
     if (values) {
       Router.replace('/');
@@ -74,7 +74,7 @@ function SignIn() {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit" loading={false}>
+            <Button type="primary" htmlType="submit" loading={isLoggingIn}>
               Log in
             </Button>
           </Form.Item>

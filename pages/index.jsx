@@ -77,14 +77,14 @@ export const SiderContainer = styled.div`
 `;
 
 function Home() {
-  const { isLoggedIn, me } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
   const { mainPosts } = useSelector((state) => state.post);
   return (
     <AppLayouts>
       <MainContainer>
         <ContentContainer>
           <AddPostForm>
-            {isLoggedIn && <ProfileImg />}
+            {me && <ProfileImg />}
             <Container>
               <AddPost>
                 <Link href="/postup">
@@ -96,7 +96,7 @@ function Home() {
             </Container>
           </AddPostForm>
 
-          {isLoggedIn && mainPosts.map((post) => <PostCard key={post.id} post={post} />)}
+          {me && mainPosts.map((post) => <PostCard key={post.id} post={post} />)}
         </ContentContainer>
         <SiderContainer>
           <UserProfile />

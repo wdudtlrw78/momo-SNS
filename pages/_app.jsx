@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { Global, css } from '@emotion/react';
+import withReduxSaga from 'next-redux-saga';
 import wrapper from '../store/configuerStroe';
 
 const globalStyles = (
@@ -63,4 +64,4 @@ MomoSNS.propTypes = {
   Component: PropTypes.elementType.isRequired,
 };
 
-export default wrapper.withRedux(MomoSNS);
+export default wrapper.withRedux(withReduxSaga(MomoSNS));

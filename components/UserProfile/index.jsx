@@ -3,10 +3,11 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { EditOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import { Button } from 'antd';
 import styled from '@emotion/styled';
 import ProfileImg from '../ProfileImg';
 import NicknameEditForm from '../NicknameEditForm';
-import { logoutAction } from '../../reducers/user';
+import { logoutRequestAction } from '../../reducers/user';
 
 export const Container = styled.div`
   width: 100%;
@@ -72,7 +73,7 @@ export const PostAndFollow = styled.div`
 
 function UserProfile() {
   const dispatch = useDispatch();
-  const { isLoggedIn, me } = useSelector((state) => state.user);
+  const { me, isLoggedIn, isLoggingOut } = useSelector((state) => state.user);
   const [nickname, setNickname] = useState(true);
   const [showNicknameEditForm, setShowNicknameEditForm] = useState(false);
 
@@ -85,7 +86,7 @@ function UserProfile() {
   const isProfilePage = router.pathname === '/profile';
 
   const onLogout = useCallback(() => {
-    dispatch(logoutAction());
+    dispatch(logoutRequestAction());
   }, []);
 
   return (
@@ -99,7 +100,7 @@ function UserProfile() {
         <NicknameAndLogout>
           {nickname && (
             <Nickname value={nickname}>
-              {isLoggedIn && me.email}{' '}
+              {isLoggedIn && me.nickname}{' '}
               {isProfilePage && (
                 <button type="button" onClick={onClickShowNicknameEditForm}>
                   <EditOutlined />
@@ -116,9 +117,14 @@ function UserProfile() {
             />
           )}
 
-          <button type="button" onClick={onLogout}>
-            <LogoutOutlined style={{ padding: '1rem', fontSize: '18px', color: '#65676B' }} title="로그아웃" />
-          </button>
+          <Button
+            type="button"
+            onClick={onLogout}
+            loading={isLoggingOut}
+            style={{ margin: '1rem 0 0.5rem 0', border: 'none' }}
+          >
+            <LogoutOutlined style={{ fontSize: '18px', color: '#65676B' }} title="로그아웃" />
+          </Button>
         </NicknameAndLogout>
         <PostAndFollow>
           <button key="post" type="button">

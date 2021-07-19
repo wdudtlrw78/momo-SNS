@@ -15,8 +15,8 @@ export const Profile = styled.img`
   ${(props) =>
     props.large &&
     css`
-      width: 72px;
-      height: 72px;
+      width: 96px;
+      height: 96px;
     `}
 `;
 
