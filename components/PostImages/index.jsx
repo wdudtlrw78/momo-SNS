@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { PlusOutlined } from '@ant-design/icons';
+import ImagesZoom from '../ImagesZoom';
 
 function PostImages({ images }) {
   const [showImagesZoom, setShowImagesZoom] = useState(false);
@@ -9,11 +10,16 @@ function PostImages({ images }) {
     setShowImagesZoom(true);
   });
 
+  const onClose = useCallback(() => {
+    setShowImagesZoom(false);
+  }, []);
+
   if (images.length === 1) {
     return (
       <>
         {/* role: 시각장애인분들을 위해 스크린 리더에서 굳이 얘를 클릭 할 필요있다 여부를 안알려줄때만 넣어준다. */}
         <img role="presentation" src={images[0].src} alt={images[0].src} onClick={onZoom} />
+        {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
       </>
     );
   }
@@ -36,6 +42,7 @@ function PostImages({ images }) {
           alt={images[1].src}
           onClick={onZoom}
         />
+        {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
       </>
     );
   }
@@ -49,7 +56,13 @@ function PostImages({ images }) {
       />
       <div
         role="presentation"
-        style={{ display: 'inline-block', width: '50%', textAlign: 'center', verticalAlign: 'middle' }}
+        style={{
+          display: 'inline-block',
+          width: '50%',
+          textAlign: 'center',
+          verticalAlign: 'middle',
+          cursor: 'pointer',
+        }}
         onClick={onZoom}
       >
         <PlusOutlined />
@@ -57,6 +70,7 @@ function PostImages({ images }) {
         {images.length - 1}
         개의 사진 더보기
       </div>
+      {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
     </>
   );
 }

@@ -34,6 +34,10 @@ const globalStyles = (
         outline: none;
         background: transparent;
       }
+
+      .slick-slide {
+        display: inline-block;
+      }
     `}
   />
 );
