@@ -1,12 +1,15 @@
 import { all, delay, fork, put, takeLatest } from 'redux-saga/effects';
-
-export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
-export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
-export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
-
-export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
-export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
-export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+import {
+  LOG_IN_FAILURE,
+  LOG_IN_REQUEST,
+  LOG_IN_SUCCESS,
+  LOG_OUT_FAILURE,
+  LOG_OUT_REQUEST,
+  LOG_OUT_SUCCESS,
+  SIGN_UP_FAILURE,
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+} from '../reducers/user';
 
 function* logIn(action) {
   try {
@@ -20,7 +23,7 @@ function* logIn(action) {
   } catch (err) {
     yield put({
       type: LOG_IN_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -36,7 +39,23 @@ function* logOut(action) {
   } catch (err) {
     yield put({
       type: LOG_OUT_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
+    });
+  }
+}
+
+function* signUp() {
+  try {
+    yield delay(1000);
+
+    yield put({
+      type: SIGN_UP_SUCCESS,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: SIGN_UP_FAILURE,
+      error: err.response.data,
     });
   }
 }
@@ -49,6 +68,10 @@ function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
 
+function* watchSignUp() {
+  yield takeLatest(SIGN_UP_REQUEST, signUp);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchLogIn), fork(watchLogOut)]);
+  yield all([fork(watchLogIn), fork(watchLogOut), fork(watchSignUp)]);
 }
