@@ -11,7 +11,7 @@ import ProfileImg from '../ProfileImg';
 
 function AppLayouts({ children }) {
   const [search, onChangeSearch] = useInput('');
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
 
   const onSearch = useCallback((e) => {
     e.preventDefault();
@@ -60,7 +60,7 @@ function AppLayouts({ children }) {
               />
             </form>
 
-            {isLoggedIn ? (
+            {me ? (
               <div style={{ display: 'flex' }}>
                 <AddPostButton>
                   <Link href="/postup">

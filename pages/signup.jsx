@@ -1,11 +1,25 @@
 import React, { useCallback } from 'react';
 import { Form, Input, Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import Router from 'next/router';
 import AppLayouts from '../components/AppLayout';
+import { SIGN_UP_REQUEST } from '../reducers/user';
 
 function SignUp() {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const { signUpLoading } = useSelector((state) => state.user);
   const onSubmitForm = useCallback((values) => {
-    console.log(values);
+    const { email, password, nickname } = values;
+
+    dispatch({
+      type: SIGN_UP_REQUEST,
+      data: { email, password, nickname },
+    });
+
+    if (values) {
+      Router.push('/signin');
+    }
   }, []);
 
   const formItemLayout = {
@@ -108,7 +122,7 @@ function SignUp() {
             <Input.Password />
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" loading={false}>
+            <Button type="primary" htmlType="submit" loading={signUpLoading}>
               Sign up
             </Button>
           </Form.Item>

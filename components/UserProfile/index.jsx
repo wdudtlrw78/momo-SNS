@@ -73,7 +73,7 @@ export const PostAndFollow = styled.div`
 
 function UserProfile() {
   const dispatch = useDispatch();
-  const { me, isLoggedIn, isLoggingOut } = useSelector((state) => state.user);
+  const { me, isLoggingOut } = useSelector((state) => state.user);
   const [nickname, setNickname] = useState(true);
   const [showNicknameEditForm, setShowNicknameEditForm] = useState(false);
 
@@ -93,14 +93,14 @@ function UserProfile() {
     <Container>
       <AvatarGroup>
         <Link href="/profile">
-          <a>{isLoggedIn && <ProfileImg large />}</a>
+          <a>{me && <ProfileImg large />}</a>
         </Link>
       </AvatarGroup>
       <InfoGroup>
         <NicknameAndLogout>
-          {nickname && (
+          {me && (
             <Nickname value={nickname}>
-              {isLoggedIn && me.nickname}{' '}
+              {me && me.nickname}{' '}
               {isProfilePage && (
                 <button type="button" onClick={onClickShowNicknameEditForm}>
                   <EditOutlined />

@@ -39,26 +39,31 @@ export const PostUpButtonContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const PostImageContainer = styled.div``;
+export const PostImageContainer = styled.div`
+  max-width: 100vw;
+  max-height: 30vh;
+  overflow-x: auto;
+  overflow-y: none;
+  white-space: nowrap;
+  background-color: #f5f6f7;
+`;
 
 function PostUp() {
-  const { imagePaths, postAdded } = useSelector((state) => state.post);
+  const { imagePaths, addPostDone } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-  const imageInput = useRef(null);
   const inputFocus = useRef(null);
   const [text, onChangeText, setText] = useInput('');
 
   const onSubmit = useCallback(() => {
-    dispatch(addPost);
-  }, [inputFocus.current]);
+    dispatch(addPost(text));
 
-  useEffect(() => {
-    if (postAdded) {
+    if (addPostDone) {
       setText('');
       Router.push('/');
     }
-  }, [postAdded]);
+  }, [text, inputFocus.current]);
 
+  const imageInput = useRef(null);
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, [imageInput.current]);

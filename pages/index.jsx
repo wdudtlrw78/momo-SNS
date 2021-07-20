@@ -89,7 +89,7 @@ function Home() {
               <AddPost>
                 <Link href="/postup">
                   <a>
-                    <p>{`${me?.email || ''} 님, 무슨 생각을 하고 계신가요?`}</p>
+                    <p>{`${me?.nickname || ''} 님, 무슨 생각을 하고 계신가요?`}</p>
                   </a>
                 </Link>
               </AddPost>

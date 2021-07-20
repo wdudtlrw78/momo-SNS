@@ -15,10 +15,12 @@ export const SignGroup = styled.div`
 
 function SignIn() {
   const dispatch = useDispatch();
-  const { isLoggingIn } = useSelector((state) => state.user);
+  const { logInLoading } = useSelector((state) => state.user);
+
   const onSubmitForm = useCallback((values) => {
-    dispatch(loginRequestAction(values));
     console.log(values);
+    dispatch(loginRequestAction(values));
+
     if (values) {
       Router.replace('/');
     }
@@ -74,7 +76,7 @@ function SignIn() {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+            <Button type="primary" htmlType="submit" loading={logInLoading}>
               Log in
             </Button>
           </Form.Item>
