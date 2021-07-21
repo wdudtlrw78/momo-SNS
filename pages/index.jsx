@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Router from 'next/router';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import UserProfile from '../components/UserProfile';
 import PostCard from '../components/PostCard';
 import ProfileImg from '../components/ProfileImg';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
+import PostForm from '../components/PostForm';
 
 export const MainContainer = styled.div`
   width: 100%;
@@ -80,6 +81,7 @@ export const SiderContainer = styled.div`
 
 function Home() {
   const dispatch = useDispatch();
+  const [showPostForm, setShowPostForm] = useState(false);
   const { me } = useSelector((state) => state.user);
   const { mainPosts, hasMorePost, loadPostsLoading } = useSelector((state) => state.post);
 
@@ -115,6 +117,10 @@ function Home() {
     }
   }, [me && me.id]);
 
+  const onClickAddPost = useCallback(() => {
+    setShowPostForm((prev) => !prev);
+  }, []);
+
   return (
     <AppLayouts>
       <MainContainer>
@@ -122,16 +128,12 @@ function Home() {
           <AddPostForm>
             <ProfileImg />
             <Container>
-              <AddPost>
-                <Link href="/postup">
-                  <a>
-                    <p>{`${me?.nickname || ''} 님, 무슨 생각을 하고 계신가요?`}</p>
-                  </a>
-                </Link>
+              <AddPost onClick={onClickAddPost}>
+                <p>{`${me?.nickname || ''} 님, 무슨 생각을 하고 계신가요?`}</p>
               </AddPost>
             </Container>
           </AddPostForm>
-
+          {showPostForm && <PostForm setShowPostForm={setShowPostForm} />}
           {mainPosts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}

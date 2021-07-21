@@ -1,19 +1,18 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Input } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
-import AppLayouts from '../components/AppLayout';
-import useInput from '../hooks/useInput';
-import { addPost } from '../reducers/post';
+
+import useInput from '../../hooks/useInput';
+import { addPost } from '../../reducers/post';
 
 export const PostUpContainer = styled.div`
-  margin-top: 4rem;
-
+  margin: 0 0 1rem 0;
+  width: 100%;
   @media (max-width: 820px) {
-    margin: 4rem 1rem 0 1rem;
   }
 `;
 
@@ -40,7 +39,6 @@ export const PostUpButtonContainer = styled.div`
 `;
 
 export const PostImageContainer = styled.div`
-  max-width: 100vw;
   max-height: 30vh;
   overflow-x: auto;
   overflow-y: none;
@@ -48,7 +46,7 @@ export const PostImageContainer = styled.div`
   background-color: #f5f6f7;
 `;
 
-function PostUp() {
+function PostForm({ setShowPostForm }) {
   const { imagePaths, addPostDone } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const inputFocus = useRef(null);
@@ -57,7 +55,7 @@ function PostUp() {
   const onSubmit = useCallback(() => {
     dispatch(addPost(text));
 
-    Router.push('/');
+    setShowPostForm((prev) => !prev);
   }, [text, inputFocus.current]);
 
   useEffect(() => {
@@ -69,18 +67,22 @@ function PostUp() {
     imageInput.current.click();
   }, [imageInput.current]);
 
+  const onCloseButton = useCallback(() => {
+    setShowPostForm((prev) => !prev);
+  }, []);
+
   return (
-    <AppLayouts>
+    <div>
       <PostUpContainer>
         <PostUpHeader>Create Post</PostUpHeader>
         <Form encType="multipart/fom-data" onFinish={onSubmit}>
           <PostUpInputContainer>
             <Input.TextArea
-              maxLength={300}
+              maxLength={150}
               placeholder="게시글을 작성해 주세요."
               value={text}
               onChange={onChangeText}
-              style={{ width: '100vw', height: '200px' }}
+              style={{ height: '200px' }}
             />
           </PostUpInputContainer>
           <PostUpButtonContainer>
@@ -90,11 +92,8 @@ function PostUp() {
               Photo
             </Button>
             <div>
-              <Link href="/">
-                <a>
-                  <Button>Cancel</Button>
-                </a>
-              </Link>
+              <Button onClick={onCloseButton}>Cancel</Button>
+
               <Button style={{ marginLeft: '0.5rem' }} type="primary" htmlType="submit">
                 Post
               </Button>
@@ -112,8 +111,8 @@ function PostUp() {
           </PostImageContainer>
         </Form>
       </PostUpContainer>
-    </AppLayouts>
+    </div>
   );
 }
 
-export default PostUp;
+export default PostForm;
