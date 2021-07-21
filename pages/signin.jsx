@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styled from '@emotion/styled';
@@ -15,14 +15,28 @@ export const SignGroup = styled.div`
 
 function SignIn() {
   const dispatch = useDispatch();
-  const { logInLoading } = useSelector((state) => state.user);
+  const { logInLoading, signUpDone, signUpError, me } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (me && me.id) {
+      Router.replace('/');
+    }
+  }, [me && me.id]);
+
+  useEffect(() => {
+    if (signUpDone) Router.replace('/');
+  }, [signUpDone]);
+
+  useEffect(() => {
+    if (signUpError) alert(signUpError);
+  }, [signUpError]);
 
   const onSubmitForm = useCallback((values) => {
     console.log(values);
     dispatch(loginRequestAction(values));
 
     if (values) {
-      Router.replace('/');
+      Router.push('/');
     }
   }, []);
 

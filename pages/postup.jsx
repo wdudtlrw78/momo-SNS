@@ -57,11 +57,12 @@ function PostUp() {
   const onSubmit = useCallback(() => {
     dispatch(addPost(text));
 
-    if (addPostDone) {
-      setText('');
-      Router.push('/');
-    }
+    Router.push('/');
   }, [text, inputFocus.current]);
+
+  useEffect(() => {
+    if (addPostDone) return setText('');
+  }, [addPostDone]);
 
   const imageInput = useRef(null);
   const onClickImageUpload = useCallback(() => {

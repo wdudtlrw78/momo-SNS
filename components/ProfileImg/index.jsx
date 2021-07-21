@@ -22,8 +22,9 @@ export const Profile = styled.img`
 
 function ProfileImg({ large }) {
   const { me } = useSelector((state) => state.user);
+  const { mainPosts } = useSelector((state) => state.post);
 
-  return <Profile src={gravatar.url(me.nickname, { s: '36px', d: 'retro' })} alt={me.nickname} large={large} />;
+  return <Profile src={gravatar.url(mainPosts.id, { s: '36px', d: 'retro' })} alt={mainPosts.id} large={large} />;
 }
 
 ProfileImg.propTypes = {

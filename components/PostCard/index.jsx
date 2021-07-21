@@ -6,11 +6,12 @@ import moment from 'moment';
 import { Button, Card, Popover, List, Comment } from 'antd';
 import { EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined, RetweetOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import ProfileImg from '../ProfileImg';
+import ProfileImg, { Profile } from '../ProfileImg';
 import PostImages from '../PostImages';
 import CommentForm from '../CommentForm';
 import PostCardContent from '../PostCardContent';
 import { REMOVE_POST_REQUEST } from '../../reducers/post';
+import Avatar from 'antd/lib/avatar/avatar';
 
 export const PostContainer = styled.div`
   margin-bottom: 1rem;
@@ -66,7 +67,7 @@ function PostCard({ post }) {
         <UserInfoGroup>
           <Link href={{ pathname: '/user', query: { id: post.User.id } }}>
             <a>
-              <ProfileImg />
+              <Avatar>{post.User.nickname[0]}</Avatar>
               <span style={{ margin: '0 0.5rem 0 1rem', verticalAlign: 'middle' }}>{post.User.nickname}</span>
             </a>
           </Link>
@@ -99,9 +100,8 @@ function PostCard({ post }) {
       </PostHeader>
 
       <Card
-        cover={post.Images[0] && <PostImages images={post.Images} />}
+        cover={post.Images[0] && <PostImages images={post.Images} post={post} />}
         actions={[
-          <RetweetOutlined style={{ fontSize: '18px' }} key="retweet" title="리트윗" />,
           liked ? (
             <HeartTwoTone
               style={{ fontSize: '18px' }}
@@ -117,17 +117,23 @@ function PostCard({ post }) {
         ]}
       >
         <Card.Meta description={<PostCardContent postData={post.content} />} />
-        <div style={{ padding: '0', color: '#00000073', marginTop: '1rem' }}>{`${post.Comments.length}개의 댓글`}</div>
+        <div style={{ padding: '0', color: '#00000073', marginTop: '1rem' }}>{`${
+          post.Comments ? post.Comments.length : 0
+        }개의 댓글`}</div>
       </Card>
       {CommentFormOpend && (
         <div>
           <CommentForm post={post} />
           <List
             itemLayout="horizontal"
-            dataSource={post.Comments}
+            dataSource={post.Comments || []}
             renderItem={(item) => (
               <li>
-                <Comment author={item.User.nickname} avatar={<ProfileImg />} content={item.content} />
+                <Comment
+                  author={item.User.nickname}
+                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  content={item.content}
+                />
               </li>
             )}
           />
@@ -146,12 +152,7 @@ PostCard.propTypes = {
     }),
     content: PropTypes.string,
     createdAt: PropTypes.object,
-    Comments: PropTypes.shape({
-      User: PropTypes.shape({
-        nickname: PropTypes.string,
-      }),
-      content: PropTypes.string,
-    }),
+    Comments: PropTypes.arrayOf(PropTypes.any),
     Images: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
 };

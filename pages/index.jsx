@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
+import Router from 'next/router';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AppLayouts from '../components/AppLayout';
 import UserProfile from '../components/UserProfile';
 import PostCard from '../components/PostCard';
 import ProfileImg from '../components/ProfileImg';
+import { LOAD_POSTS_REQUEST } from '../reducers/post';
 
 export const MainContainer = styled.div`
   width: 100%;
@@ -77,14 +79,48 @@ export const SiderContainer = styled.div`
 `;
 
 function Home() {
+  const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { mainPosts } = useSelector((state) => state.post);
+  const { mainPosts, hasMorePost, loadPostsLoading } = useSelector((state) => state.post);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_POSTS_REQUEST,
+    });
+  }, []);
+
+  useEffect(() => {
+    function onScroll() {
+      console.log(window.scrollY, document.documentElement.clientHeight, document.documentElement.scrollHeight);
+
+      if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+        if (hasMorePost && !loadPostsLoading) {
+          dispatch({
+            type: LOAD_POSTS_REQUEST,
+          });
+        }
+      }
+    }
+
+    window.addEventListener('scroll', onScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!(me && me.id)) {
+      Router.push('/signin');
+    }
+  }, [me && me.id]);
+
   return (
     <AppLayouts>
       <MainContainer>
         <ContentContainer>
           <AddPostForm>
-            {me && <ProfileImg />}
+            <ProfileImg />
             <Container>
               <AddPost>
                 <Link href="/postup">
@@ -96,7 +132,9 @@ function Home() {
             </Container>
           </AddPostForm>
 
-          {me && mainPosts.map((post) => <PostCard key={post.id} post={post} />)}
+          {mainPosts.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
         </ContentContainer>
         <SiderContainer>
           <UserProfile />
