@@ -35,6 +35,7 @@ function* addPost(action) {
       data: id,
     });
   } catch (err) {
+    console.log(err);
     yield put({
       type: ADD_POST_FAILURE,
       error: err.response.data,
@@ -50,6 +51,7 @@ function* loadPosts() {
       data: generateDummyPost(10),
     });
   } catch (err) {
+    console.log(err);
     yield put({
       type: LOAD_POSTS_FAILURE,
       error: err.response.data,
@@ -65,7 +67,6 @@ function* removePost(action) {
       type: REMOVE_POST_SUCCESS,
       data: action.data,
     });
-    // 유저 리듀서 액션 호출
     yield put({
       type: REMOVE_POST_OF_ME,
       data: action.data,
@@ -88,6 +89,7 @@ function* addComment(action) {
       data: action.data,
     });
   } catch (err) {
+    console.log(err);
     yield put({
       type: ADD_COMMENT_FAILURE,
       error: err.response.data,

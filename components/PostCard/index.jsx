@@ -11,6 +11,7 @@ import PostImages from '../PostImages';
 import CommentForm from '../CommentForm';
 import PostCardContent from '../PostCardContent';
 import { REMOVE_POST_REQUEST } from '../../reducers/post';
+import FollowButton from '../FollowButton';
 
 export const PostContainer = styled.div`
   margin-bottom: 1rem;
@@ -70,7 +71,7 @@ function PostCard({ post }) {
               <span style={{ margin: '0 0.5rem 0 1rem', verticalAlign: 'middle' }}>{post.User.nickname}</span>
             </a>
           </Link>
-          <PostDate>{moment('YYYYMMDD, h:mm:ss').fromNow()}</PostDate>
+          <PostDate>{moment(post.createdAt).format('YYYY.MM.DD')}</PostDate>
         </UserInfoGroup>
         <PopoverContainer>
           <Popover
@@ -86,7 +87,7 @@ function PostCard({ post }) {
                   </>
                 ) : (
                   <>
-                    <Button>팔로우</Button>
+                    {id && <FollowButton post={post} />}
                     <Button type="danger">신고</Button>
                   </>
                 )}
@@ -146,12 +147,12 @@ PostCard.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.string,
     User: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       nickname: PropTypes.string,
     }),
     content: PropTypes.string,
     createdAt: PropTypes.object,
-    Comments: PropTypes.arrayOf(PropTypes.any),
+    Comments: PropTypes.arrayOf(PropTypes.object),
     Images: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
 };
