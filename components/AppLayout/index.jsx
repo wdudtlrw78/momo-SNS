@@ -2,12 +2,10 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { Affix, Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Affix, Avatar } from 'antd';
 import useInput from '../../hooks/useInput';
 import 'antd/dist/antd.css';
-import { AddPostButton, HeadContainer, MainContainer } from './styles';
-import ProfileImg from '../ProfileImg';
+import { HeadContainer, MainContainer } from './styles';
 
 function AppLayouts({ children }) {
   const [search, onChangeSearch] = useInput('');
@@ -59,47 +57,28 @@ function AppLayouts({ children }) {
                 onChange={onChangeSearch}
               />
             </form>
-
-            {me ? (
-              <div style={{ display: 'flex' }}>
-                <AddPostButton>
-                  <Link href="/postup">
-                    <a>
-                      <PlusOutlined
-                        className="plus"
-                        style={{ paddingBottom: '2px', fontSize: '18px', color: '#292929' }}
-                      />
-                    </a>
-                  </Link>
-                </AddPostButton>
-
-                <div
-                  className="user-info"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '36px',
-                    height: '36px',
-                    border: '1px solid #292929',
-                    borderRadius: '50%',
-                    cursor: 'pointer',
-                  }}
-                >
+            <div style={{ display: 'flex' }}>
+              <div
+                className="user-info"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  cursor: 'pointer',
+                }}
+              >
+                {me && (
                   <Link href="/profile">
                     <a>
-                      <ProfileImg />
+                      <Avatar>{me.nickname[0]}</Avatar>
                     </a>
                   </Link>
-                </div>
+                )}
               </div>
-            ) : (
-              <Button>
-                <Link href="/signin">
-                  <a>Sign In</a>
-                </Link>
-              </Button>
-            )}
+            </div>
           </HeadContainer>
         </header>
       </Affix>

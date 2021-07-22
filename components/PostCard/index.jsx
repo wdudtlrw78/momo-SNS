@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import moment from 'moment';
-import { Button, Card, Popover, List, Comment } from 'antd';
-import { EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined, RetweetOutlined } from '@ant-design/icons';
+import { Button, Card, Popover, List, Comment, Avatar } from 'antd';
+import { EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import ProfileImg, { Profile } from '../ProfileImg';
+
 import PostImages from '../PostImages';
 import CommentForm from '../CommentForm';
 import PostCardContent from '../PostCardContent';
 import { REMOVE_POST_REQUEST } from '../../reducers/post';
-import Avatar from 'antd/lib/avatar/avatar';
 
 export const PostContainer = styled.div`
   margin-bottom: 1rem;
@@ -145,7 +144,7 @@ function PostCard({ post }) {
 
 PostCard.propTypes = {
   post: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
     User: PropTypes.shape({
       id: PropTypes.number,
       nickname: PropTypes.string,

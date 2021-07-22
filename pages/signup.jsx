@@ -2,23 +2,21 @@ import React, { useCallback } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
-import AppLayouts from '../components/AppLayout';
 import { SIGN_UP_REQUEST } from '../reducers/user';
 
 function SignUp() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { signUpLoading } = useSelector((state) => state.user);
-  const onSubmitForm = useCallback((values) => {
-    const { email, password, nickname } = values;
 
+  const onSubmitForm = useCallback((values) => {
     dispatch({
       type: SIGN_UP_REQUEST,
-      data: { email, password, nickname },
     });
 
     if (values) {
-      Router.push('/signin');
+      alert('회원가입이 완료되었습니다.');
+      Router.replace('/');
     }
   }, []);
 
@@ -47,11 +45,11 @@ function SignUp() {
   };
 
   return (
-    <AppLayouts>
+    <div>
       <div
         style={{
           fontFamily: 'Roboto',
-          height: '60vh',
+          height: '80vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -59,7 +57,20 @@ function SignUp() {
           padding: '0 16px',
         }}
       >
-        {' '}
+        <span
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: '#008CFF',
+            fontSize: '2.25rem',
+            fontFamily: 'Roboto',
+            fontWeight: '700',
+            marginBottom: '3rem',
+          }}
+        >
+          Momo.
+        </span>
         <Form {...formItemLayout} onFinish={onSubmitForm} form={form} style={{ width: '416px' }}>
           <Form.Item
             name="email"
@@ -128,7 +139,7 @@ function SignUp() {
           </Form.Item>
         </Form>
       </div>
-    </AppLayouts>
+    </div>
   );
 }
 

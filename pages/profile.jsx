@@ -10,12 +10,16 @@ function Profile() {
 
   useEffect(() => {
     if (!(me && me.id)) {
-      Router.push('/signin');
+      Router.push('/');
     }
   }, [me && me.id]);
 
   if (!me) {
     return null;
+  }
+
+  if (!me) {
+    return '내 정보 로딩중...';
   }
   return (
     <AppLayouts>

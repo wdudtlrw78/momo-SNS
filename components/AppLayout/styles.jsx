@@ -11,6 +11,7 @@ export const HeadContainer = styled.div`
     height: 28px;
     padding: 0 4px;
     border: 1px solid #d9d9d9;
+    border-radius: 4px;
     color: #292929;
   }
 
@@ -26,29 +27,6 @@ export const HeadContainer = styled.div`
   @media (max-width: 820px) {
     & #search {
       display: none;
-    }
-  }
-`;
-
-export const AddPostButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid #292929;
-  border-radius: 50%;
-  margin-right: 16px;
-  @media (min-width: 820px) {
-    display: none;
-  }
-
-  &:hover {
-    background: #008cff;
-    transition: background 0.3s ease-in;
-
-    & .plus {
-      color: #fff;
     }
   }
 `;

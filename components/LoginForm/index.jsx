@@ -3,9 +3,7 @@ import Link from 'next/link';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
-import Router from 'next/router';
-import AppLayout from '../components/AppLayout';
-import { loginRequestAction } from '../reducers/user';
+import { loginRequestAction } from '../../reducers/user';
 
 export const SignGroup = styled.div`
   @media (max-width: 575px) {
@@ -13,42 +11,22 @@ export const SignGroup = styled.div`
   }
 `;
 
-function SignIn() {
+function LoginForm() {
   const dispatch = useDispatch();
-  const { logInLoading, signUpDone, signUpError, me } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (me && me.id) {
-      Router.replace('/');
-    }
-  }, [me && me.id]);
-
-  useEffect(() => {
-    if (signUpDone) Router.replace('/');
-  }, [signUpDone]);
-
-  useEffect(() => {
-    if (signUpError) alert(signUpError);
-  }, [signUpError]);
+  const { logInLoading } = useSelector((state) => state.user);
 
   const onSubmitForm = useCallback((values) => {
     console.log(values);
     dispatch(loginRequestAction(values));
-
-    if (values) {
-      Router.push('/');
-    }
   }, []);
 
   return (
-    <AppLayout>
+    <div style={{ marginBottom: '36px' }}>
       <div
         style={{
           fontFamily: 'Roboto',
-          height: '60vh',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
           padding: '0 16px',
         }}
       >
@@ -102,8 +80,8 @@ function SignIn() {
           </SignGroup>
         </Form>
       </div>
-    </AppLayout>
+    </div>
   );
 }
 
-export default SignIn;
+export default LoginForm;

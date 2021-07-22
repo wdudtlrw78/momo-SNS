@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Router from 'next/router';
-import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
+import { Avatar } from 'antd';
+import { useInView } from 'react-intersection-observer';
 import AppLayouts from '../components/AppLayout';
 import UserProfile from '../components/UserProfile';
 import PostCard from '../components/PostCard';
-import ProfileImg from '../components/ProfileImg';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
 import PostForm from '../components/PostForm';
+import LoginForm from '../components/LoginForm';
 
 export const MainContainer = styled.div`
   width: 100%;
@@ -36,7 +37,7 @@ export const AddPostForm = styled.div`
   margin-bottom: 1rem;
   padding-left: 0.5rem;
   background: #fff;
-  border: 1px solid #e6e6e6;
+  border: 1px solid #008cff;
   border-radius: 8px;
 
   @media (max-width: 820px) {
@@ -72,6 +73,7 @@ export const AddPost = styled.button`
 export const SiderContainer = styled.div`
   width: 100%;
   flex: 4;
+
   padding-left: 1rem;
 
   @media (max-width: 820px) {
@@ -83,39 +85,24 @@ function Home() {
   const dispatch = useDispatch();
   const [showPostForm, setShowPostForm] = useState(false);
   const { me } = useSelector((state) => state.user);
-  const { mainPosts, hasMorePost, loadPostsLoading } = useSelector((state) => state.post);
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_POSTS_REQUEST,
-    });
-  }, []);
-
-  useEffect(() => {
-    function onScroll() {
-      console.log(window.scrollY, document.documentElement.clientHeight, document.documentElement.scrollHeight);
-
-      if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
-        if (hasMorePost && !loadPostsLoading) {
-          dispatch({
-            type: LOAD_POSTS_REQUEST,
-          });
-        }
-      }
-    }
-
-    window.addEventListener('scroll', onScroll);
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
+  const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector((state) => state.post);
+  const [ref, inView] = useInView();
 
   useEffect(() => {
     if (!(me && me.id)) {
-      Router.push('/signin');
+      Router.push('/');
     }
   }, [me && me.id]);
+
+  useEffect(() => {
+    if (inView && hasMorePosts && !loadPostsLoading) {
+      const lastId = mainPosts[mainPosts.length - 1]?.id;
+      dispatch({
+        type: LOAD_POSTS_REQUEST,
+        lastId,
+      });
+    }
+  }, [inView, hasMorePosts, loadPostsLoading, mainPosts]);
 
   const onClickAddPost = useCallback(() => {
     setShowPostForm((prev) => !prev);
@@ -125,22 +112,23 @@ function Home() {
     <AppLayouts>
       <MainContainer>
         <ContentContainer>
-          <AddPostForm>
-            <ProfileImg />
-            <Container>
-              <AddPost onClick={onClickAddPost}>
-                <p>{`${me?.nickname || ''} 님, 무슨 생각을 하고 계신가요?`}</p>
-              </AddPost>
-            </Container>
-          </AddPostForm>
-          {showPostForm && <PostForm setShowPostForm={setShowPostForm} />}
+          {me && (
+            <AddPostForm>
+              <Avatar>{me?.nickname[0]}</Avatar>
+              <Container>
+                <AddPost onClick={onClickAddPost}>
+                  <p>{`${me?.nickname || ''} 님, 무슨 생각을 하고 계신가요?`}</p>
+                </AddPost>
+              </Container>
+            </AddPostForm>
+          )}
+          {me && showPostForm ? <PostForm setShowPostForm={setShowPostForm} /> : null}
           {mainPosts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
+          <div ref={hasMorePosts && !loadPostsLoading ? ref : undefined} />
         </ContentContainer>
-        <SiderContainer>
-          <UserProfile />
-        </SiderContainer>
+        <SiderContainer>{me ? <UserProfile /> : <LoginForm />}</SiderContainer>
       </MainContainer>
     </AppLayouts>
   );

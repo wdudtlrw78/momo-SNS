@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import React, { useCallback, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import Router from 'next/router';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Input } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
@@ -10,24 +10,11 @@ import useInput from '../../hooks/useInput';
 import { addPost } from '../../reducers/post';
 
 export const PostUpContainer = styled.div`
-  margin: 0 0 1rem 0;
+  margin: -0.5rem 0 1rem 0;
   width: 100%;
   @media (max-width: 820px) {
   }
 `;
-
-export const PostUpHeader = styled.div`
-  background: #008cff;
-  padding: 1rem 0;
-  font-size: 24px;
-  font-family: Roboto;
-  color: #fff;
-  border: 1px solid #d9d9d9;
-  border-bottom: none;
-  text-align: center;
-`;
-
-export const PostUpInputContainer = styled.div``;
 
 export const PostUpButtonContainer = styled.div`
   display: flex;
@@ -74,17 +61,15 @@ function PostForm({ setShowPostForm }) {
   return (
     <div>
       <PostUpContainer>
-        <PostUpHeader>Create Post</PostUpHeader>
         <Form encType="multipart/fom-data" onFinish={onSubmit}>
-          <PostUpInputContainer>
-            <Input.TextArea
-              maxLength={150}
-              placeholder="게시글을 작성해 주세요."
-              value={text}
-              onChange={onChangeText}
-              style={{ height: '200px' }}
-            />
-          </PostUpInputContainer>
+          <Input.TextArea
+            maxLength={150}
+            placeholder="게시글을 작성해 주세요."
+            value={text}
+            onChange={onChangeText}
+            style={{ height: '200px' }}
+          />
+
           <PostUpButtonContainer>
             <input type="file" multiple hidden ref={imageInput} />
             <Button onClick={onClickImageUpload}>
@@ -114,5 +99,9 @@ function PostForm({ setShowPostForm }) {
     </div>
   );
 }
+
+PostForm.propTypes = {
+  setShowPostForm: PropTypes.func.isRequired,
+};
 
 export default PostForm;

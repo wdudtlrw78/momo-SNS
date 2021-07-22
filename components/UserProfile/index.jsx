@@ -3,9 +3,8 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { EditOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { Button } from 'antd';
+import { Button, Avatar } from 'antd';
 import styled from '@emotion/styled';
-import ProfileImg from '../ProfileImg';
 import NicknameEditForm from '../NicknameEditForm';
 import { logoutRequestAction } from '../../reducers/user';
 
@@ -93,21 +92,32 @@ function UserProfile() {
     <Container>
       <AvatarGroup>
         <Link href="/profile">
-          <a>{me && <ProfileImg large />}</a>
+          <a>
+            <Avatar
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '96px',
+                height: '96px',
+                fontSize: '24px',
+              }}
+            >
+              {me?.nickname[0]}
+            </Avatar>
+          </a>
         </Link>
       </AvatarGroup>
       <InfoGroup>
         <NicknameAndLogout>
-          {me && (
-            <Nickname value={nickname}>
-              {me && me.nickname}{' '}
-              {isProfilePage && (
-                <button type="button" onClick={onClickShowNicknameEditForm}>
-                  <EditOutlined />
-                </button>
-              )}
-            </Nickname>
-          )}
+          <Nickname value={nickname}>
+            {me?.nickname}{' '}
+            {isProfilePage && (
+              <button type="button" onClick={onClickShowNicknameEditForm}>
+                <EditOutlined />
+              </button>
+            )}
+          </Nickname>
 
           {showNicknameEditForm && (
             <NicknameEditForm
@@ -129,20 +139,25 @@ function UserProfile() {
         <PostAndFollow>
           <button key="post" type="button">
             게시물
-            <br />0
+            <br />
+            {me?.Posts.length}
           </button>
-          <button key="follower" type="button">
-            <Link href="/profile">
-              <a>팔로워</a>
-            </Link>
-            <br />0
-          </button>
-          <button key="follow" type="button">
-            <Link href="/profile">
-              <a>팔로우</a>
-            </Link>
-            <br />0
-          </button>
+          <Link href="/profile">
+            <a>
+              <button key="follower" type="button">
+                팔로워 <br />
+                {me?.Followers.length}
+              </button>
+            </a>
+          </Link>
+          <Link href="/profile">
+            <a>
+              <button key="follow" type="button">
+                팔로우 <br />
+                {me?.Follows.length}
+              </button>
+            </a>
+          </Link>
         </PostAndFollow>
       </InfoGroup>
     </Container>
