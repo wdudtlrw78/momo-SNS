@@ -73,7 +73,7 @@ function AppLayouts({ children }) {
                 {me && (
                   <Link href="/profile">
                     <a>
-                      <Avatar>{me.nickname[0]}</Avatar>
+                      <Avatar>{me.nickname}</Avatar>
                     </a>
                   </Link>
                 )}

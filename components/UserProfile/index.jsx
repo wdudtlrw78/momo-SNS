@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { EditOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useRouter } from 'next/router';
+import { LogoutOutlined } from '@ant-design/icons';
+
 import { Button, Avatar } from 'antd';
 import styled from '@emotion/styled';
-import NicknameEditForm from '../NicknameEditForm';
+
 import { logoutRequestAction } from '../../reducers/user';
 
 export const Container = styled.div`
@@ -73,16 +73,6 @@ export const PostAndFollow = styled.div`
 function UserProfile() {
   const dispatch = useDispatch();
   const { me, isLoggingOut } = useSelector((state) => state.user);
-  const [nickname, setNickname] = useState(true);
-  const [showNicknameEditForm, setShowNicknameEditForm] = useState(false);
-
-  const onClickShowNicknameEditForm = useCallback(() => {
-    setNickname(false);
-    setShowNicknameEditForm(true);
-  }, []);
-
-  const router = useRouter();
-  const isProfilePage = router.pathname === '/profile';
 
   const onLogout = useCallback(() => {
     dispatch(logoutRequestAction());
@@ -103,37 +93,17 @@ function UserProfile() {
                 fontSize: '24px',
               }}
             >
-              {me?.nickname[0]}
+              {me?.nickname}
             </Avatar>
           </a>
         </Link>
       </AvatarGroup>
       <InfoGroup>
         <NicknameAndLogout>
-          <Nickname value={nickname}>
-            {me?.nickname}{' '}
-            {isProfilePage && (
-              <button type="button" onClick={onClickShowNicknameEditForm}>
-                <EditOutlined />
-              </button>
-            )}
-          </Nickname>
+          <Nickname value={me?.nickname} />
 
-          {showNicknameEditForm && (
-            <NicknameEditForm
-              value={showNicknameEditForm}
-              setNickname={setNickname}
-              setShowNicknameEditForm={setShowNicknameEditForm}
-            />
-          )}
-
-          <Button
-            type="button"
-            onClick={onLogout}
-            loading={isLoggingOut}
-            style={{ margin: '1rem 0 0.5rem 0', border: 'none' }}
-          >
-            <LogoutOutlined style={{ fontSize: '18px', color: '#65676B' }} title="로그아웃" />
+          <Button type="button" onClick={onLogout} loading={isLoggingOut} style={{ margin: '1rem 1rem 0.5rem 0' }}>
+            로그아웃
           </Button>
         </NicknameAndLogout>
         <PostAndFollow>

@@ -15,6 +15,7 @@ const ImagesZoom = ({ images, onClose }) => {
       <SlickWrapper>
         <div>
           <Slick
+            dots
             initialSlide={0}
             beforeChange={(slide) => setCurrentSlide(slide)}
             infinite

@@ -38,10 +38,6 @@ export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
-export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_REQUEST';
-export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
-export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
-
 export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 export const FOLLOW_SUCCESS = 'FOLLOW_SUCCESS';
 export const FOLLOW_FAILURE = 'FOLLOW_FAILURE';
@@ -120,19 +116,7 @@ const reducer = (state = initialState, action) =>
         draft.signUpLoading = false;
         draft.signUpError = action.error;
         break;
-      case CHANGE_NICKNAME_REQUEST:
-        draft.chnageNicknameLoading = true;
-        draft.chnageNicknameError = null;
-        draft.chnageNicknameDone = false;
-        break;
-      case CHANGE_NICKNAME_SUCCESS:
-        draft.chnageNicknameLoading = false;
-        draft.chnageNicknameDone = true;
-        break;
-      case CHANGE_NICKNAME_FAILURE:
-        draft.changeNicknameLoading = false;
-        draft.changeNicknameError = action.error;
-        break;
+
       case FOLLOW_REQUEST:
         draft.followLoading = true;
         draft.followError = null;
