@@ -140,7 +140,7 @@ const reducer = (state = initialState, action) =>
         break;
       case FOLLOW_SUCCESS:
         draft.followLoading = false;
-        draft.me.Follows.push({ id: action.data });
+        draft.me.Follows.push({ nickname: action.data });
         draft.followDone = true;
         break;
       case FOLLOW_FAILURE:
@@ -154,7 +154,7 @@ const reducer = (state = initialState, action) =>
         break;
       case UNFOLLOW_SUCCESS:
         draft.unfollowLoading = false;
-        draft.me.Follows = draft.me.Follows.filter((v) => v.id !== action.data);
+        draft.me.Follows = draft.me.Follows.filter((v) => v.nickname !== action.data);
         draft.unfollowDone = true;
         break;
       case UNFOLLOW_FAILURE:
