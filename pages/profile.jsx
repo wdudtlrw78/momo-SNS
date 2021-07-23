@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import Head from 'next/head';
 import Router from 'next/router';
 import { useSelector } from 'react-redux';
 import AppLayouts from '../components/AppLayout';
@@ -22,12 +23,17 @@ function Profile() {
     return '내 정보 로딩중...';
   }
   return (
-    <AppLayouts>
-      <UserProfile />
+    <>
+      <Head>
+        <title>내 프로필 | Momo.</title>
+      </Head>
+      <AppLayouts>
+        <UserProfile />
 
-      <FollowList header="팔로워 목록" data={me.Followers} />
-      <FollowList header="팔로우 목록" data={me.Follows} />
-    </AppLayouts>
+        <FollowList header="팔로워 목록" data={me.Followers} />
+        <FollowList header="팔로우 목록" data={me.Follows} />
+      </AppLayouts>
+    </>
   );
 }
 

@@ -21,10 +21,14 @@ function CommentForm({ post }) {
   }, [addCommentDone]);
 
   const onSubmitComment = useCallback(() => {
-    dispatch({
-      type: ADD_COMMENT_REQUEST,
-      data: { content: commentText, postId: post.id, userId: id },
-    });
+    if (!id) {
+      alert('로그인이 필요합니다.');
+    } else {
+      dispatch({
+        type: ADD_COMMENT_REQUEST,
+        data: { content: commentText, postId: post.id, userId: id },
+      });
+    }
   }, [commentText, id]);
   return (
     <Form onFinish={onSubmitComment}>

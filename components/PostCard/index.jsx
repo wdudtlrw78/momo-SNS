@@ -41,6 +41,7 @@ export const PopoverContainer = styled.div``;
 
 function PostCard({ post }) {
   const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
   const { removePostLoading } = useSelector((state) => state.post);
   const [liked, setLiked] = useState(false);
   const [CommentFormOpend, setCommentFormOpend] = useState(false);
@@ -102,7 +103,7 @@ function PostCard({ post }) {
       <Card
         cover={post.Images[0] && <PostImages images={post.Images} post={post} />}
         actions={[
-          liked ? (
+          liked && me && me.id ? (
             <HeartTwoTone
               style={{ fontSize: '18px' }}
               twoToneColor="#eb2f96"
