@@ -20,58 +20,58 @@
 
 ## List
 
-[x] LoginForm
+- [x] LoginForm
 
 ![loginForm](public/images//loginForm.JPG)
 
 <br />
 
-[x] Signup Page
+- [x] Signup Page
 
 ![signpage](public/images/signup.JPG)
 
 <br />
 
-[x] Profile Page
+- [x] Profile Page
 
 ![profile](public/images/profile.JPG)
 
 <br />
 
-[x] Post
+- [x] Post
 
 ![post](public/images/post.JPG)
 
 <br />
 
-[x] Comment
+- [x] Comment
 
 ![comment](public/images/comment.JPG)
 
 <br />
 
-[x] Image
+- [x] Image
 
 ![images](public/images/two.JPG)
 ![images](public/images/three.JPG)
 
 <br />
 
-[x] Image Carousel
+- [x] Image Carousel
 
 ![carousel](public/images/carousel.JPG)
 
 <br />
 
-[x] Follow, Unfollow
+- [x] Follow, Unfollow
 
 ![follow](public/images/follow.png)
 ![unfollow](public/images/unfollow.png)
 
 <br />
 
-[x] HashTag Link
+- [x] HashTag Link
 
 <br />
 
-[x] Infinite Scrolling
+- [x] Infinite Scrolling
