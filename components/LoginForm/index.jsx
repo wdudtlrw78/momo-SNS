@@ -16,7 +16,6 @@ function LoginForm() {
   const { logInLoading } = useSelector((state) => state.user);
 
   const onSubmitForm = useCallback((values) => {
-    console.log(values);
     dispatch(loginRequestAction(values));
   }, []);
 

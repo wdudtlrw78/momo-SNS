@@ -148,7 +148,7 @@ PostCard.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.string,
     User: PropTypes.shape({
-      id: PropTypes.string,
+      id: PropTypes.number || PropTypes.string,
       nickname: PropTypes.string,
     }),
     content: PropTypes.string,

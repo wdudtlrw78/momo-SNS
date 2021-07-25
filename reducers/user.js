@@ -116,7 +116,6 @@ const reducer = (state = initialState, action) =>
         draft.signUpLoading = false;
         draft.signUpError = action.error;
         break;
-
       case FOLLOW_REQUEST:
         draft.followLoading = true;
         draft.followError = null;

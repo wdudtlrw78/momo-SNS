@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import { useSelector } from 'react-redux';
@@ -25,7 +25,7 @@ function Profile() {
   return (
     <>
       <Head>
-        <title>내 프로필 | Momo.</title>
+        <title>Profile | Momo.</title>
       </Head>
       <AppLayouts>
         <UserProfile />
