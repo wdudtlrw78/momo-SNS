@@ -46,7 +46,7 @@ function PostForm({ setShowPostForm }) {
   }, [text, inputFocus.current]);
 
   useEffect(() => {
-    if (addPostDone) return setText('');
+    if (addPostDone) setText('');
   }, [addPostDone]);
 
   const imageInput = useRef(null);
