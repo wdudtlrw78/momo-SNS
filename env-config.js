@@ -1,6 +1,6 @@
-const debug = process.env.NODE_ENV !== 'production'
-const name = 'small-magic-project-deployment'
+const debug = process.env.NODE_ENV !== 'production';
+const name = 'momo-SNS';
 
 module.exports = {
-  'process.env.BACKEND_URL': !debug ? `/${momo-SNS}` : '',
-}
+  'process.env.BACKEND_URL': !debug ? `/${name}` : '',
+};
