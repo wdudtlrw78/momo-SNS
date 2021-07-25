@@ -41,7 +41,7 @@ function PostCard({ post }) {
     <PostContainer>
       <PostHeader>
         <UserInfoGroup>
-          <Link href={{ pathname: '/user', query: { id: post.User.id } }}>
+          <Link href={{ pathname: '/user', query: { id: post.User.id } }} prefetch={false}>
             <a>
               <Avatar>{post.User.nickname[0]}</Avatar>
               <span style={{ margin: '0 0.5rem 0 1rem', verticalAlign: 'middle' }}>{post.User.nickname}</span>
