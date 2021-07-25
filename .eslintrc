@@ -27,6 +27,9 @@
     "no-param-reassign": "off",
     "react/jsx-props-no-spreading": "off",
     "operator-linebreak": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "react/jsx-wrap-multilines": "off",
+    "no-unused-vars": "off",
+    "react/jsx-closing-tag-location": "off"
   }
 }
