@@ -25,7 +25,7 @@ function Profile() {
   return (
     <>
       <Head>
-        <title>Profile | Momo.</title>
+        <title>Profile | Momo</title>
       </Head>
       <AppLayouts>
         <UserProfile />

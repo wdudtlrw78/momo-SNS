@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { LogoutOutlined } from '@ant-design/icons';
 
 import { Button, Avatar } from 'antd';
 import styled from '@emotion/styled';

@@ -52,7 +52,7 @@ function MomoSNS({ Component }) {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>Momo.</title>
+        <title>Momo</title>
       </Head>
       {globalStyles}
       <Component />

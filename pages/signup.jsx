@@ -48,7 +48,7 @@ function SignUp() {
   return (
     <>
       <Head>
-        <title>Signup | Momo.</title>
+        <title>Signup | Momo</title>
       </Head>
       <div>
         <div

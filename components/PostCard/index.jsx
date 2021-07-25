@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
+
 import Link from 'next/link';
 import moment from 'moment';
 import { Button, Card, Popover, List, Comment, Avatar } from 'antd';
@@ -12,32 +12,7 @@ import CommentForm from '../CommentForm';
 import PostCardContent from '../PostCardContent';
 import { REMOVE_POST_REQUEST } from '../../reducers/post';
 import FollowButton from '../FollowButton';
-
-export const PostContainer = styled.div`
-  margin-bottom: 1rem;
-`;
-
-export const PostHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  border: 1px solid #e6e6e6;
-  border-bottom: none;
-  padding: 0.5rem 0 0.5rem 1rem;
-`;
-
-export const UserInfoGroup = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const PostDate = styled.div`
-  font-family: Roboto;
-  color: #888;
-`;
-
-export const PopoverContainer = styled.div``;
+import { PostContainer, PostDate, PostHeader, UserInfoGroup } from './styled';
 
 function PostCard({ post }) {
   const dispatch = useDispatch();
@@ -74,7 +49,7 @@ function PostCard({ post }) {
           </Link>
           <PostDate>{moment(post.createdAt).format('YYYY.MM.DD')}</PostDate>
         </UserInfoGroup>
-        <PopoverContainer>
+        <div>
           <Popover
             key="more"
             content={
@@ -97,7 +72,7 @@ function PostCard({ post }) {
           >
             <EllipsisOutlined style={{ fontSize: '24px', padding: '0.5rem 1rem', cursor: 'pointer', color: '#888' }} />
           </Popover>
-        </PopoverContainer>
+        </div>
       </PostHeader>
 
       <Card
