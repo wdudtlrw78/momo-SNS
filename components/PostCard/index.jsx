@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PostImages from '../PostImages';
 import CommentForm from '../CommentForm';
 import PostCardContent from '../PostCardContent';
-import { REMOVE_POST_REQUEST } from '../../reducers/post';
+import { REMOVE_POST_REQUEST, UPDATE_POST_REQUEST } from '../../reducers/post';
 import FollowButton from '../FollowButton';
 import { PostContainer, PostDate, PostHeader, UserInfoGroup } from './styled';
 
@@ -20,6 +20,29 @@ function PostCard({ post }) {
   const { removePostLoading } = useSelector((state) => state.post);
   const [liked, setLiked] = useState(false);
   const [CommentFormOpend, setCommentFormOpend] = useState(false);
+  const id = useSelector((state) => state.user.me?.id);
+  const [editMode, setEditMode] = useState(false);
+
+  const onClickUpdate = useCallback(() => {
+    setEditMode(true);
+  }, []);
+
+  const onCancelUpdate = useCallback(() => {
+    setEditMode(false);
+  }, []);
+
+  const onChangePost = useCallback(
+    (editText) => () => {
+      dispatch({
+        type: UPDATE_POST_REQUEST,
+        data: {
+          PostId: post.id,
+          content: editText,
+        },
+      });
+    },
+    [post],
+  );
 
   const onToggleLike = useCallback(() => {
     setLiked((prev) => !prev);
@@ -36,7 +59,6 @@ function PostCard({ post }) {
     });
   }, []);
 
-  const id = useSelector((state) => state.user.me?.id);
   return (
     <PostContainer>
       <PostHeader>
@@ -56,7 +78,7 @@ function PostCard({ post }) {
               <Button.Group>
                 {id && post.User.id === id ? (
                   <>
-                    <Button>수정</Button>
+                    <Button onClick={onClickUpdate}>수정</Button>
                     <Button type="danger" loading={removePostLoading} onClick={onRemovePost}>
                       삭제
                     </Button>
@@ -92,7 +114,16 @@ function PostCard({ post }) {
           <MessageOutlined style={{ fontSize: '18px' }} key="comment" onClick={onToggleComment} title="댓글" />,
         ]}
       >
-        <Card.Meta description={<PostCardContent postData={post.content} />} />
+        <Card.Meta
+          description={
+            <PostCardContent
+              editMode={editMode}
+              onCancelUpdate={onCancelUpdate}
+              onChangePost={onChangePost}
+              postData={post.content}
+            />
+          }
+        />
         <div style={{ padding: '0', color: '#00000073', marginTop: '1rem' }}>{`${
           post.Comments ? post.Comments.length : 0
         }개의 댓글`}</div>
@@ -123,7 +154,7 @@ PostCard.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.string,
     User: PropTypes.shape({
-      id: PropTypes.number || PropTypes.string,
+      id: PropTypes.string,
       nickname: PropTypes.string,
     }),
     content: PropTypes.string,

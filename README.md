@@ -2,8 +2,6 @@
 
 ## Intro
 
-제로초 강의 복습 && 응용
-
 더미데이터와 함께 프론트 SNS화면 구현하기
 
 ## Tech
@@ -71,6 +69,10 @@
 ![unfollow](public/images/unfollow.png)
 
 <br />
+
+- [x] Edit Post
+
+![edit](public/images/postEdit.png)
 
 - [x] HashTag Link
 
