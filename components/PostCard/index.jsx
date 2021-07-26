@@ -84,10 +84,7 @@ function PostCard({ post }) {
                     </Button>
                   </>
                 ) : (
-                  <>
-                    {id && <FollowButton post={post} />}
-                    <Button type="danger">신고</Button>
-                  </>
+                  <>{id && <FollowButton post={post} />}</>
                 )}
               </Button.Group>
             }
