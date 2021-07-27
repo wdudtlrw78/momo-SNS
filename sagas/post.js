@@ -11,6 +11,9 @@ import {
   LOAD_POSTS_FAILURE,
   LOAD_POSTS_REQUEST,
   LOAD_POSTS_SUCCESS,
+  REMOVE_CUTOFF_POSTS_FAILURE,
+  REMOVE_CUTOFF_POSTS_REQUEST,
+  REMOVE_CUTOFF_POSTS_SUCCESS,
   REMOVE_POST_FAILURE,
   REMOVE_POST_REQUEST,
   REMOVE_POST_SUCCESS,
@@ -100,6 +103,23 @@ function* removePost(action) {
   }
 }
 
+function* removeCutOffPosts(action) {
+  try {
+    yield delay(1000);
+
+    yield put({
+      type: REMOVE_CUTOFF_POSTS_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: REMOVE_CUTOFF_POSTS_FAILURE,
+      data: err.response.data,
+    });
+  }
+}
+
 function* addComment(action) {
   try {
     yield delay(1000);
@@ -133,6 +153,10 @@ function* watchRemovePost() {
   yield takeLatest(REMOVE_POST_REQUEST, removePost);
 }
 
+function* watchCutOffRemovePosts() {
+  yield takeLatest(REMOVE_CUTOFF_POSTS_REQUEST, removeCutOffPosts);
+}
+
 function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
@@ -144,5 +168,6 @@ export default function* postSaga() {
     fork(watchUpdatePost),
     fork(watchAddComment),
     fork(watchRemovePost),
+    fork(watchCutOffRemovePosts),
   ]);
 }

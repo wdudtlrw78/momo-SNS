@@ -22,6 +22,11 @@ export const initialState = {
   removePostDone: false,
   removePostError: null,
 
+  // 차단 게시글들 삭제
+  removeCutOffPostLoading: false,
+  removeCutOffPostDone: false,
+  removeCutOffPostError: null,
+
   // 게시글 수정
   updatePostLoading: false,
   updatePostDone: false,
@@ -92,6 +97,10 @@ export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
 export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
 export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
 export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+
+export const REMOVE_CUTOFF_POSTS_REQUEST = 'REMOVE_CUTOFF_POSTS_REQUEST';
+export const REMOVE_CUTOFF_POSTS_SUCCESS = 'REMOVE_CUTOFF_POSTS_SUCCESS';
+export const REMOVE_CUTOFF_POSTS_FAILURE = 'REMOVE_CUTOFF_POSTS_FAILURE';
 
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
@@ -214,6 +223,20 @@ const reducer = (state = initialState, action) =>
       case REMOVE_POST_FAILURE:
         draft.removePostLoading = false;
         draft.removePostError = action.error;
+        break;
+      case REMOVE_CUTOFF_POSTS_REQUEST:
+        draft.removeCutOffPostLoading = true;
+        draft.removeCutOffPostDone = false;
+        draft.removeCutOffPostError = null;
+        break;
+      case REMOVE_CUTOFF_POSTS_SUCCESS:
+        draft.removeCutOffPostLoading = false;
+        draft.removeCutOffPostDone = true;
+        draft.mainPosts = draft.mainPosts.filter((v) => v.User.id !== action.data.UserId);
+        break;
+      case REMOVE_CUTOFF_POSTS_FAILURE:
+        draft.removeCutOffPostLoading = false;
+        draft.removeCutOffPostError = action.error;
         break;
       case ADD_COMMENT_REQUEST:
         draft.addCommentLoading = true;

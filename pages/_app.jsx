@@ -43,6 +43,25 @@ const globalStyles = (
       .slick-slide {
         display: inline-block;
       }
+
+      .report-modal {
+        p {
+          margin: 0;
+          padding: 1rem 0.5rem;
+        }
+
+        p:not(.report-modal__title) {
+          cursor: pointer;
+        }
+
+        p:not(.report-modal__title):active {
+          background: #f2f0f5;
+        }
+
+        .report-modal__title {
+          color: #008cff;
+        }
+      }
     `}
   />
 );

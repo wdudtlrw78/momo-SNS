@@ -24,7 +24,7 @@ function PostCardContent({ postData, editMode, onCancelUpdate, onChangePost }) {
       {editMode ? (
         <>
           <TextArea value={editText} onChange={onChangeText} />
-          <Button.Group>
+          <Button.Group style={{ float: 'right' }}>
             <Button loading={updatePostLoading} onClick={onChangePost(editText)}>
               수정
             </Button>

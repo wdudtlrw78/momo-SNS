@@ -1,18 +1,20 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 
 import Link from 'next/link';
 import moment from 'moment';
-import { Button, Card, Popover, List, Comment, Avatar } from 'antd';
+import { Button, Card, Popover, List, Comment, Avatar, Modal } from 'antd';
 import { EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PostImages from '../PostImages';
 import CommentForm from '../CommentForm';
 import PostCardContent from '../PostCardContent';
-import { REMOVE_POST_REQUEST, UPDATE_POST_REQUEST } from '../../reducers/post';
+import { REMOVE_CUTOFF_POSTS_REQUEST, REMOVE_POST_REQUEST, UPDATE_POST_REQUEST } from '../../reducers/post';
 import FollowButton from '../FollowButton';
 import { PostContainer, PostDate, PostHeader, UserInfoGroup } from './styled';
+import { UNFOLLOW_REQUEST } from '../../reducers/user';
 
 function PostCard({ post }) {
   const dispatch = useDispatch();
@@ -20,8 +22,10 @@ function PostCard({ post }) {
   const { removePostLoading } = useSelector((state) => state.post);
   const [liked, setLiked] = useState(false);
   const [CommentFormOpend, setCommentFormOpend] = useState(false);
-  const id = useSelector((state) => state.user.me?.id);
   const [editMode, setEditMode] = useState(false);
+  const [isReportModalVisible, setIsReportModalVisible] = useState(false);
+
+  const id = useSelector((state) => state.user.me?.id);
 
   const onClickUpdate = useCallback(() => {
     setEditMode(true);
@@ -59,6 +63,84 @@ function PostCard({ post }) {
     });
   }, []);
 
+  const isReportUnfollowUser = me?.Follows.find((v) => v.nickname === post.User.nickname);
+
+  const onReportUnFollow = useCallback(() => {
+    console.log('qweqwe');
+    if (isReportUnfollowUser) {
+      dispatch({
+        type: UNFOLLOW_REQUEST,
+        data: post.User.nickname,
+      });
+      alert('팔로우 취소가 완료되었습니다.');
+      setIsReportModalVisible(false);
+    } else {
+      alert('팔로우 유저가 아닙니다.');
+      setIsReportModalVisible(false);
+    }
+  }, [isReportUnfollowUser]);
+
+  const onReportCutOff = useCallback(() => {
+    alert('차단이 완료되었습니다.');
+
+    dispatch({
+      type: REMOVE_CUTOFF_POSTS_REQUEST,
+      data: {
+        UserId: post.User.id,
+      },
+    });
+
+    if (isReportUnfollowUser) {
+      dispatch({
+        type: UNFOLLOW_REQUEST,
+        data: post.User.nickname,
+      });
+    }
+  }, [isReportUnfollowUser]);
+
+  const showReportModal = useCallback(() => {
+    if (!(me && me.id)) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+    setIsReportModalVisible(true);
+  }, [me && me.id]);
+
+  const handleOk = () => {
+    setIsReportModalVisible(false);
+  };
+
+  const handleCancel = useCallback(() => {
+    setIsReportModalVisible(false);
+  }, []);
+
+  function showJunkMailReportModal() {
+    setIsReportModalVisible(false);
+    Modal.success({
+      content: '알려주셔셔 감사합니다',
+    });
+  }
+
+  function showIDontLikeReportMidal() {
+    setIsReportModalVisible(false);
+    Modal.success({
+      title: '이 내용을 보고 싶지 않으세요?',
+      content: (
+        <div>
+          <p
+            style={{ margin: 0, marginTop: '1rem', padding: '0.5rem 0', color: 'red', cursor: 'pointer' }}
+            onClick={onReportCutOff}
+          >
+            {post.User.nickname}님 차단
+          </p>
+          <p style={{ padding: '0.5rem 0', cursor: 'pointer' }} onClick={onReportUnFollow}>
+            {post.User.nickname}님 팔로우 취소
+          </p>
+        </div>
+      ),
+    });
+  }
+
   return (
     <PostContainer>
       <PostHeader>
@@ -84,7 +166,24 @@ function PostCard({ post }) {
                     </Button>
                   </>
                 ) : (
-                  <>{id && <FollowButton post={post} />}</>
+                  <>
+                    <Button type="danger" onClick={showReportModal}>
+                      신고
+                    </Button>
+                    <Modal
+                      className="report-modal"
+                      title="신고"
+                      visible={isReportModalVisible}
+                      onOk={handleOk}
+                      onCancel={handleCancel}
+                      zIndex={2000}
+                    >
+                      <p className="report-modal__title">이 게시물을 신고하는 이유</p>
+                      <p onClick={showJunkMailReportModal}>스팸</p>
+                      <p onClick={showIDontLikeReportMidal}>마음에 들지 않습니다.</p>
+                    </Modal>
+                    {id && <FollowButton post={post} />}
+                  </>
                 )}
               </Button.Group>
             }
