@@ -1,11 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import Router from 'next/router';
 
 import Link from 'next/link';
 import moment from 'moment';
 import { Button, Card, Popover, List, Comment, Avatar, Modal } from 'antd';
-import { EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import PostImages from '../PostImages';
@@ -19,11 +18,12 @@ import { UNFOLLOW_REQUEST } from '../../reducers/user';
 function PostCard({ post }) {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { removePostLoading } = useSelector((state) => state.post);
+  const { removePostLoading, removeCutOffPostLoading } = useSelector((state) => state.post);
   const [liked, setLiked] = useState(false);
   const [CommentFormOpend, setCommentFormOpend] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [isReportModalVisible, setIsReportModalVisible] = useState(false);
+  const [isIDontReportModalVisible, setIsIDontReportModalVisible] = useState(false);
 
   const id = useSelector((state) => state.user.me?.id);
 
@@ -66,23 +66,30 @@ function PostCard({ post }) {
   const isReportUnfollowUser = me?.Follows.find((v) => v.nickname === post.User.nickname);
 
   const onReportUnFollow = useCallback(() => {
-    console.log('qweqwe');
     if (isReportUnfollowUser) {
       dispatch({
         type: UNFOLLOW_REQUEST,
         data: post.User.nickname,
       });
-      alert('팔로우 취소가 완료되었습니다.');
-      setIsReportModalVisible(false);
+      Modal.success({
+        content: '팔로우 취소가 완료되었습니다.',
+        okText: '닫기',
+      });
+      setIsIDontReportModalVisible(false);
     } else {
-      alert('팔로우 유저가 아닙니다.');
-      setIsReportModalVisible(false);
+      Modal.warning({
+        content: '팔로우 유저가 아닙니다.',
+        okText: '닫기',
+      });
     }
+    setIsIDontReportModalVisible(false);
   }, [isReportUnfollowUser]);
 
   const onReportCutOff = useCallback(() => {
-    alert('차단이 완료되었습니다.');
-
+    Modal.success({
+      title: '차단이 완료되었습니다.',
+      okText: '닫기',
+    });
     dispatch({
       type: REMOVE_CUTOFF_POSTS_REQUEST,
       data: {
@@ -118,27 +125,13 @@ function PostCard({ post }) {
     setIsReportModalVisible(false);
     Modal.success({
       content: '알려주셔셔 감사합니다',
+      okText: '닫기',
     });
   }
 
   function showIDontLikeReportMidal() {
+    setIsIDontReportModalVisible(true);
     setIsReportModalVisible(false);
-    Modal.success({
-      title: '이 내용을 보고 싶지 않으세요?',
-      content: (
-        <div>
-          <p
-            style={{ margin: 0, marginTop: '1rem', padding: '0.5rem 0', color: 'red', cursor: 'pointer' }}
-            onClick={onReportCutOff}
-          >
-            {post.User.nickname}님 차단
-          </p>
-          <p style={{ padding: '0.5rem 0', cursor: 'pointer' }} onClick={onReportUnFollow}>
-            {post.User.nickname}님 팔로우 취소
-          </p>
-        </div>
-      ),
-    });
   }
 
   return (
@@ -173,14 +166,53 @@ function PostCard({ post }) {
                     <Modal
                       className="report-modal"
                       title="신고"
-                      visible={isReportModalVisible}
+                      visible={isReportModalVisible || isIDontReportModalVisible}
                       onOk={handleOk}
                       onCancel={handleCancel}
                       zIndex={2000}
                     >
-                      <p className="report-modal__title">이 게시물을 신고하는 이유</p>
-                      <p onClick={showJunkMailReportModal}>스팸</p>
-                      <p onClick={showIDontLikeReportMidal}>마음에 들지 않습니다.</p>
+                      {isReportModalVisible && (
+                        <>
+                          <p className="report-modal__title">이 게시물을 신고하는 이유</p>
+                          <p onClick={showJunkMailReportModal}>스팸</p>
+                          <p onClick={showIDontLikeReportMidal}>마음에 들지 않습니다.</p>
+                        </>
+                      )}
+                      {isIDontReportModalVisible && (
+                        <>
+                          <div
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <CheckCircleOutlined style={{ fontSize: '48px', color: '#58c322' }} />
+                            <p style={{ fontSize: '18px', color: '#292929' }}>이 내용을 보고 싶지 않으세요?</p>
+                          </div>
+                          <div>
+                            <p
+                              style={{
+                                margin: 0,
+                                marginTop: '1rem',
+                                padding: '0.5rem',
+                                color: 'red',
+                                cursor: 'pointer',
+                              }}
+                              onClick={onReportCutOff}
+                            >
+                              {post.User.nickname}님 차단
+                            </p>
+                            <p
+                              style={{ padding: '0.5rem', cursor: 'pointer', color: '#292929' }}
+                              onClick={onReportUnFollow}
+                            >
+                              {post.User.nickname}님 팔로우 취소
+                            </p>
+                          </div>
+                        </>
+                      )}
                     </Modal>
                     {id && <FollowButton post={post} />}
                   </>

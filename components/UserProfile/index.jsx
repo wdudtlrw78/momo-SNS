@@ -67,6 +67,12 @@ export const PostAndFollow = styled.div`
     color: #008cff;
     transition: color 0.3s ease-in;
   }
+
+  @media (max-width: 380px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 function UserProfile() {

@@ -50,18 +50,19 @@ export const Container = styled.div`
   padding: 0 0.5rem;
 `;
 
-export const AddPost = styled.button`
+export const AddPost = styled.div`
   width: 100%;
   height: 36px;
   background-color: #f0f2f5;
   border-radius: 24px;
+  cursor: pointer;
 
   &:hover {
-    background: #e4e6eb;
+    background-color: #e4e6eb;
     transition: background 0.3s ease-in;
   }
 
-  & p {
+  p {
     display: flex;
     align-items: center;
     height: 36px;
