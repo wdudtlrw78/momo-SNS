@@ -1,12 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-
 import Link from 'next/link';
 import moment from 'moment';
 import { Button, Card, Popover, List, Comment, Avatar, Modal } from 'antd';
 import { CheckCircleOutlined, EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-
 import PostImages from '../PostImages';
 import CommentForm from '../CommentForm';
 import PostCardContent from '../PostCardContent';
@@ -18,7 +16,7 @@ import { UNFOLLOW_REQUEST } from '../../reducers/user';
 function PostCard({ post }) {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { removePostLoading, removeCutOffPostLoading } = useSelector((state) => state.post);
+  const { removePostLoading } = useSelector((state) => state.post);
   const [liked, setLiked] = useState(false);
   const [CommentFormOpend, setCommentFormOpend] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -115,10 +113,12 @@ function PostCard({ post }) {
 
   const handleOk = () => {
     setIsReportModalVisible(false);
+    setIsIDontReportModalVisible(false);
   };
 
   const handleCancel = useCallback(() => {
     setIsReportModalVisible(false);
+    setIsIDontReportModalVisible(false);
   }, []);
 
   function showJunkMailReportModal() {

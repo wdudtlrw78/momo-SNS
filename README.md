@@ -2,6 +2,8 @@
 
 ## Intro
 
+제로초 리액트 노드버드 강의 수강 후 복습, 응용 목적
+
 더미데이터와 함께 프론트 SNS화면 구현하기
 
 ## Tech
@@ -18,63 +20,32 @@
 
 <br />
 
-## List
-
-- [x] LoginForm
-
-![loginForm](public/images//loginForm.JPG)
+![screen](/public/images/screen.png)
 
 <br />
+
+## Function
 
 - [x] Signup Page
-
-![signpage](public/images/signup.JPG)
+- [x] Profile Page
 
 <br />
 
-- [x] Profile Page
-
-![profile](public/images/profile.JPG)
+- [x] LoginForm
+- [x] Follow, Unfollow
+- [x] Report Modal
 
 <br />
 
 - [x] Post
-
-![post](public/images/post.JPG)
-
-<br />
-
 - [x] Comment
-
-![comment](public/images/comment.JPG)
+- [x] HashTag Link
+- [x] Edit Post
 
 <br />
 
 - [x] Image
-
-![images](public/images/two.JPG)
-![images](public/images/three.JPG)
-
-<br />
-
 - [x] Image Carousel
-
-![carousel](public/images/carousel.JPG)
-
-<br />
-
-- [x] Follow, Unfollow
-
-![follow](public/images/follow.png)
-![unfollow](public/images/unfollow.png)
-
-<br />
-
-- [x] Edit Post
-
-![edit](public/images/postEdit.png)
-
-- [x] HashTag Link
 
 <br />
 

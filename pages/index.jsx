@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Router from 'next/router';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'antd';
 import { useInView } from 'react-intersection-observer';
@@ -88,12 +88,6 @@ function Home() {
   const { me } = useSelector((state) => state.user);
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector((state) => state.post);
   const [ref, inView] = useInView();
-
-  useEffect(() => {
-    if (!(me && me.id)) {
-      Router.push('/');
-    }
-  }, [me && me.id]);
 
   useEffect(() => {
     if (inView && hasMorePosts && !loadPostsLoading) {
